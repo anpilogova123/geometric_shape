@@ -1,4 +1,5 @@
 import cv2
+from cv2 import rectangle
 import numpy as np
 import math
 
@@ -25,8 +26,12 @@ for cnt in contours:
     cv2.drawContours(drawing, [cnt], -1, (255, 255, 255), 2)
 
     # описанный прямоугольник с вращением 
-       
-    print('Площадь круга:', circle_area)
+    rectangle = cv2.minAreaRect(cnt)
+    box = cv2.boxPoints(rectangle)
+    box = np.int0(box)
+    cv2.drawContours(drawing, [box], 0, (0, 150, 255), 2)
+    rectangle_area = cv2.contourArea(box)
+    print('Площадь прямоугольника:', rectangle_area)
     print()
     cv2.imshow('drawing', drawing)
     cv2.waitKey(0)
